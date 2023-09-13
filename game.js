@@ -7,7 +7,7 @@ let level = 0;
 
 $("body").keypress(function () {
   if (!started) {
-    $("#level-title").html(`level ${level}`);
+    // $("#level-title").html(`level ${level}`);
 
     nextSequence();
     started = true;
@@ -20,9 +20,33 @@ $(".btn").click(function () {
 
   playSound(userChosenColour);
   animatePress(userChosenColour);
+  checkAnswer(userClickedPattern.length - 1);
 });
 
+function checkAnswer(currentLevel) {
+  if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+    console.log("success");
+
+    if (gamePattern.length === userClickedPattern.length) {
+      setTimeout(() => {
+        nextSequence();
+      }, 1000);
+    }
+  } else {
+    let sound = new Audio("./sounds/wrong.mp3")
+    sound.play()
+    $("h1").html("Game Over, Press Any Key to Restart")
+    $("body").addClass("game-over")
+    setTimeout(() => {
+      $("body").removeClass("game-over")
+    }, 200);
+   
+  console.log("wrong");
+}
+}
+
 function nextSequence() {
+  userClickedPattern = [];
   level++;
   $("#level-title").html(`level ${level}`);
   let randomNumber = Math.floor(Math.random() * 4);
