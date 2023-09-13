@@ -33,14 +33,15 @@ function checkAnswer(currentLevel) {
       }, 1000);
     }
   } else {
-    let sound = new Audio("./sounds/wrong.mp3")
-    sound.play()
-    $("h1").html("Game Over, Press Any Key to Restart")
+    // let sound = new Audio("./sounds/wrong.mp3")
+    // sound.play()
+    playSound("wrong")
+    $("#level-title").html("Game Over, Press Any Key to Restart")
     $("body").addClass("game-over")
     setTimeout(() => {
       $("body").removeClass("game-over")
     }, 200);
-   
+   startOver();
   console.log("wrong");
 }
 }
@@ -67,4 +68,9 @@ function animatePress(currentColour) {
   setTimeout(() => {
     $(`#${currentColour}`).removeClass("pressed");
   }, 100);
+}
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  started = false;
 }
